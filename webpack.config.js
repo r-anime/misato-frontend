@@ -1,16 +1,20 @@
+const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const config = require('../discord-mod-bot/config');
+const dev = process.env.NODE_ENV === 'production' ? false : true;
 
 module.exports = {
-	mode: config.dev ? 'development' : 'production',
-	devtool: config.dev ? 'source-map' : false,
+	mode: dev ? 'development' : 'production',
+	devtool: dev ? 'source-map' : false,
 	entry: './index.js',
 	output: {
-		path: config.web.frontendBuildDir,
+		path: path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js',
 		publicPath: '/',
+	},
+	devServer: {
+		contentBase: './dist',
 	},
 	module: {
 		rules: [

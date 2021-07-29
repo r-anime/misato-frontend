@@ -8,7 +8,8 @@
     "lint:fix": "eslint . --ext js,vue --fix",
     "build": "webpack",
     "build:watch": "webpack --watch",
-    "build:prod": "NODE_ENV=production webpack"
+    "build:prod": "NODE_ENV=production webpack",
+    "start": "webpack serve --open"
   },
   "dependencies": {
     "buefy": "^0.8.20",
