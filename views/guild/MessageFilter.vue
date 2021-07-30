@@ -66,6 +66,7 @@
 
 <script>
 import FilterEditor from '../../components/FilterEditor';
+import {getFilterConfig, setFilterConfig} from '../../util/requests';
 
 export default {
 	components: {
@@ -87,7 +88,7 @@ export default {
 		},
 	},
 	async created () {
-		const rule = await fetch(`/api/filters/${this.guildID}/configuration`).then(response => {
+		const rule = await getFilterConfig().then(response => {
 			if (response.ok) {
 				return response.json();
 			}
@@ -99,13 +100,7 @@ export default {
 	methods: {
 		async submit () {
 			this.submitting = true;
-			const response = await fetch(`/api/filters/${this.guildID}/configuration`, {
-				method: 'POST',
-				headers: {
-					'content-type': 'application/json',
-				},
-				body: this.rule,
-			});
+			const response = await setFilterConfig(this.guildID, JSON.parse(this.rule));
 			this.submitting = false;
 			if (response.ok) {
 				this.lastRule = this.rule;

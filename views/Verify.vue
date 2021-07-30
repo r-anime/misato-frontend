@@ -35,14 +35,14 @@
 							<p>
 								<strong>{{ discordInfo.username }}#{{ discordInfo.discriminator }}</strong>
 							</p>
-							<p><a :href="`/auth/discord/logout?next=${encodedCurrentURL}`">Log out</a></p>
+							<p><a :href="discordLogoutHref()">Log out</a></p>
 						</div>
 						<p
 							v-else
 							class="has-text-centered"
 						>
 							<a
-								:href="`/auth/discord?next=${encodedCurrentURL}`"
+								:href="discordLoginHref()"
 								class="button is-discord"
 							>Log in with Discord</a>
 						</p>
@@ -56,14 +56,14 @@
 								<img :src="redditInfo.avatarURL">
 							</figure>
 							<p><strong>/u/{{ redditInfo.name }}</strong></p>
-							<p><a :href="`/auth/reddit/logout?next=${encodedCurrentURL}`">Log out</a></p>
+							<p><a :href="redditLogoutHref()">Log out</a></p>
 						</div>
 						<p
 							v-else
 							class="has-text-centered"
 						>
 							<a
-								:href="`/auth/reddit?next=${encodedCurrentURL}`"
+								:href="redditLoginHref()"
 								class="button is-reddit"
 							>Log in with Reddit</a>
 						</p>
@@ -76,11 +76,15 @@
 
 <script>
 import {mapState} from 'vuex';
+import {confirmVerify, getRedditInfo} from '../util/requests';
+
+// Encoded current URL, passed to auth endpoints
+const here = encodeURIComponent(window.location);
+
 export default {
 	data () {
 		return {
 			redditInfo: undefined,
-			encodedCurrentURL: encodeURIComponent(window.location.href),
 		};
 	},
 	computed: {
@@ -96,13 +100,25 @@ export default {
 		this.fetchRedditInfo();
 	},
 	methods: {
+		discordLoginHref () {
+			return endpoint(`/auth/discord?next=${here}`);
+		},
+		discordLogoutHref () {
+			return endpoint(`/auth/discord/logout?next=${here}`);
+		},
+		redditLoginHref () {
+			return endpoint(`/auth/reddit?next=${here}`);
+		},
+		redditLogoutHref () {
+			return endpoint(`/auth/reddit/logout?next=${here}`);
+		},
 		fetchRedditInfo () {
-			fetch('/auth/reddit/about').then(async response => {
+			getRedditInfo().then(async response => {
 				this.redditInfo = response.ok ? await response.json().catch(() => null) : null;
 			});
 		},
 		linkAccounts () {
-			fetch(`/api/verification/${this.guildID}`, {method: 'POST'}).then(response => {
+			confirmVerify().then(response => {
 				if (response.ok) {
 					// eslint-disable-next-line no-alert
 					alert('Accounts linked! You should now have access to the server. You can close this window now.');

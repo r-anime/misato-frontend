@@ -41,6 +41,7 @@
 import {mapActions, mapState} from 'vuex';
 
 import RoleDropdown from '../../components/RoleDropdown.vue';
+import {getVerificationConfig, setVerificationConfig} from '../../util/requests';
 
 export default {
 	components: {RoleDropdown},
@@ -70,7 +71,7 @@ export default {
 	},
 	async created () {
 		this.fetchGuildRoles(this.guildID);
-		const guildSettings = await fetch(`/api/verification/${this.guildID}/configuration`).then(response => {
+		const guildSettings = await getVerificationConfig(this.guildID).then(response => {
 			if (response.status === 404) {
 				return {};
 			}
@@ -85,14 +86,8 @@ export default {
 		]),
 		async submit () {
 			this.submitting = true;
-			const response = await fetch(`/api/verification/${this.guildID}/configuration`, {
-				method: 'POST',
-				headers: {
-					'content-type': 'application/json',
-				},
-				body: JSON.stringify({
-					roleID: this.verificationRoleID,
-				}),
+			const response = await setVerificationConfig(this.guildID, {
+				roleID: this.verificationRoleID,
 			});
 			this.submitting = false;
 			if (!response.ok) {

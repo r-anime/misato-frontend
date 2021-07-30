@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import {deleteMemberBan, deleteMemberKick, deleteMemberNote, deleteMemberWarning, getMemberInfo, getMemberKicks, getMemberWarnings} from '../../util/requests';
 export default {
 	data () {
 		return {
@@ -94,11 +95,11 @@ export default {
 	},
 	created () {
 		Promise.all([
-			fetch(`/api/guilds/${this.guildID}/members/${this.userID}/about`).then(response => response.json()),
-			fetch(`/api/guilds/${this.guildID}/members/${this.userID}/notes`).then(response => response.json()),
-			fetch(`/api/guilds/${this.guildID}/members/${this.userID}/warnings`).then(response => response.json()),
-			fetch(`/api/guilds/${this.guildID}/members/${this.userID}/kicks`).then(response => response.json()),
-			fetch(`/api/guilds/${this.guildID}/members/${this.userID}/bans`).then(response => response.json()),
+			getMemberInfo().then(response => response.json()),
+			getMemberNotes().then(response => response.json()),
+			getMemberWarnings().then(response => response.json()),
+			getMemberKicks().then(response => response.json()),
+			getMemberBans().then(response => response.json()),
 		]).then(([memberInfo, notes, warnings, kicks, bans]) => {
 			this.memberInfo = memberInfo;
 			this.notes = notes;
@@ -109,9 +110,19 @@ export default {
 	},
 	methods: {
 		deleteThing (thing) {
-			fetch(`/api/guilds/${this.guildID}/members/${this.userID}/${thing.type}s/${thing._id}`, {
-				method: 'DELETE',
-			}).then(response => {
+			let fetchFunction;
+			if (thing.type === 'note') {
+				fetchFunction = deleteMemberNote;
+			} else if (thing.type === 'warning') {
+				fetchFunction = deleteMemberWarning;
+			} else if (thing.type === 'kick') {
+				fetchFunction = deleteMemberKick;
+			} else if (thing.type === 'ban') {
+				fetchFunction = deleteMemberBan;
+			} else {
+				throw new Error(`Unknown thing type ${thing.type}`);
+			}
+			fetchFunction(this.guildID, this.userID, thing._id).then(response => {
 				if (response.ok) {
 					this.$buefy.toast.open({
 						duration: 1000,

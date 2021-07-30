@@ -63,7 +63,8 @@
 
 <script>
 import {mapState} from 'vuex';
-import {discordIconURL} from '../util';
+import {getManagedGuilds} from '../util/requests';
+import {discordIconURL} from '../util/misc';
 export default {
 	data () {
 		return {
@@ -74,7 +75,7 @@ export default {
 		...mapState(['discordInfo']),
 	},
 	async created () {
-		const response = await fetch('/api/guilds/managed');
+		const response = await getManagedGuilds();
 
 		if (response.status === 200) {
 			this.guilds = await response.json();

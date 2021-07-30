@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { getDiscordInfo, getGuildChannels, getGuildRoles } from './util/requests';
 
 Vue.use(Vuex);
 
@@ -33,7 +34,7 @@ export default new Vuex.Store({
 	actions: {
 		fetchDiscordInfo ({commit}) {
 			if (!fetchDiscordInfoPromise) {
-				fetchDiscordInfoPromise = fetch('/auth/discord/about').then(async response => {
+				fetchDiscordInfoPromise = getDiscordInfo().then(async response => {
 					commit('SET_DISCORD_INFO', response.ok ? await response.json().catch(() => null) : null);
 					fetchDiscordInfoPromise = null;
 				});
@@ -42,7 +43,7 @@ export default new Vuex.Store({
 		},
 		fetchGuildRoles ({commit}, guildID) {
 			if (!fetchGuildRolesPromise) {
-				fetchGuildRolesPromise = fetch(`/api/guilds/${guildID}/roles`).then(async response => {
+				fetchGuildRolesPromise = getGuildRoles(guildID).then(async response => {
 					commit('SET_GUILD_ROLES', {
 						guildID,
 						roles: response.ok ? await response.json().catch(() => null) : null,
@@ -54,7 +55,7 @@ export default new Vuex.Store({
 		},
 		fetchGuildChannels ({commit}, guildID) {
 			if (!fetchGuildChannelsPromise) {
-				fetchGuildChannelsPromise = fetch(`/api/guilds/${guildID}/channels`).then(async response => {
+				fetchGuildChannelsPromise = getGuildChannels(guildID).then(async response => {
 					commit('SET_GUILD_CHANNELS', {
 						guildID,
 						channels: response.ok ? await response.json().catch(() => null) : null,
@@ -65,7 +66,7 @@ export default new Vuex.Store({
 		},
 		fetchEmojis ({commit}) {
 			if (!fetchEmojisPromise) {
-				fetchEmojisPromise = fetch('/api/channel-automation/emojis').then(async response => {
+				fetchEmojisPromise = getAllEmojis().then(async response => {
 					commit('SET_EMOJIS', response.ok ? await response.json().catch(() => null) : null);
 					fetchEmojisPromise = null;
 				});

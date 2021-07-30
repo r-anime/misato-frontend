@@ -66,6 +66,7 @@
 
 <script>
 import ChannelAutomationCategory from '../../components/ChannelAutomationCategory.vue';
+import {getChannelAutomationInfo, setChannelAutomationInfo} from '../../util/requests';
 export default {
 	components: {
 		ChannelAutomationCategory,
@@ -86,7 +87,7 @@ export default {
 		},
 	},
 	created () {
-		fetch(`/api/channel-automation/${this.guildID}`).then(res => res.json()).then(data => {
+		getChannelAutomationInfo(this.guildID).then(res => res.json()).then(data => {
 			this.categories = data.categories.map(c => JSON.stringify(c));
 			this.channelID = data.channelID;
 		});
@@ -101,15 +102,9 @@ export default {
 		submit () {
 			if (this.submitting) return;
 			this.submitting = true;
-			fetch(`/api/channel-automation/${this.guildID}`, {
-				method: 'PUT',
-				headers: {
-					'content-type': 'application/json',
-				},
-				body: JSON.stringify({
-					channelID: this.channeID,
-					categories: this.categories.map(c => JSON.parse(c)),
-				}),
+			setChannelAutomationInfo(this.guildID, {
+				channelID: this.channeID,
+				categories: this.categories.map(c => JSON.parse(c)),
 			}).then(response => {
 				if (!response.ok) {
 					// eslint-disable-next-line no-alert

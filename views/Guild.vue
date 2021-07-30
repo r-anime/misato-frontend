@@ -86,7 +86,8 @@
 
 <script>
 import {mapState} from 'vuex';
-import {discordIconURL} from '../util';
+import {discordIconURL} from '../util/misc';
+import {getGuildInfo} from '../util/requests'
 export default {
 	data () {
 		return {
@@ -104,7 +105,7 @@ export default {
 		},
 	},
 	async created () {
-		const response = await fetch(`/api/guilds/${this.guildID}`);
+		const response = await getGuildInfo(this.guildID);
 		if (!response.ok) return;
 
 		const data = await response.json();
