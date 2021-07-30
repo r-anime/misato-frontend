@@ -1,7 +1,5 @@
-import config from '../config';
-
 /** Converts an endpoint path to a full URI based on the configured API base. */
-export const endpoint = path => `${config.apiBaseURI}${path}`;
+export const endpoint = path => `${__RUNTIME_CONFIG__.apiBaseURI}${path}`;
 
 // Basic functions for HTTP methods
 const get = (path, opts = {}) => fetch(endpoint(path), {method: 'GET', credentials: 'include', ...opts});

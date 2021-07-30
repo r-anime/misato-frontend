@@ -1,8 +1,11 @@
 const path = require('path');
+const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const dev = process.env.NODE_ENV === 'production' ? false : true;
+
+const runtimeConfig = dev ? require('./config') : require('./config.prod');
 
 module.exports = {
 	mode: dev ? 'development' : 'production',
@@ -25,6 +28,9 @@ module.exports = {
 		],
 	},
 	plugins: [
+		new webpack.DefinePlugin({
+			__RUNTIME_CONFIG__: JSON.stringify(runtimeConfig),
+		}),
 		new VueLoaderPlugin(),
 		// Create HTML base
 		new HtmlWebpackPlugin({
