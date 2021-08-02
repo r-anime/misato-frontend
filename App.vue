@@ -27,7 +27,7 @@
 						<span>Hi, <strong>{{ discordInfo.username }}#{{ discordInfo.discriminator }}</strong></span>
 					</b-navbar-item>
 					<b-navbar-item
-						:href="'/auth/discord/logout?next=' + encodedCurrentURL()"
+						:href="discordLogoutHref()"
 						class="has-text-danger"
 					>
 						Log out
@@ -38,7 +38,7 @@
 					tag="div"
 				>
 					<a
-						:href="'/auth/discord?next=' + encodedCurrentURL()"
+						:href="discordLoginHref()"
 						class="button is-small is-primary is-inverted"
 					>
 						Log in with Discord
@@ -54,14 +54,22 @@
 
 <script>
 import {mapState} from 'vuex';
+import {endpoint} from './util/requests';
+
+// Encoded current URL, passed to auth endpoints
+const here = encodeURIComponent(window.location);
+
 export default {
 	computed: {
 		...mapState(['discordInfo']),
 	},
 	methods: {
-		encodedCurrentURL () {
-			return encodeURIComponent(window.location.href);
+		discordLoginHref () {
+			return endpoint(`/auth/discord?next=${here}`);
 		},
+		discordLogoutHref () {
+			return endpoint(`/auth/discord/logout?next=${here}`);
+		}
 	},
 };
 </script>

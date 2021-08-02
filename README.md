@@ -9,11 +9,13 @@ For the backend repository, which contains the Discord bot logic and the API thi
 ```bash
 # Install dependencies
 npm install
-# Build and host the frontend
+# If necessary, change your API host
+$EDITOR config.json
+# Build and host for development
 npm run start
+# Build for production
+npm run build:prod
 ```
-
-TODO: add note about setting API paths
 
 ## License
 
