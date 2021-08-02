@@ -76,7 +76,7 @@
 
 <script>
 import {mapState} from 'vuex';
-import {confirmVerify, getRedditInfo} from '../util/requests';
+import {confirmVerify, getRedditInfo, endpoint} from '../util/requests';
 
 // Encoded current URL, passed to auth endpoints
 const here = encodeURIComponent(window.location);
