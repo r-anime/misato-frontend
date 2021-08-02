@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import {deleteMemberBan, deleteMemberKick, deleteMemberNote, deleteMemberWarning, getMemberInfo, getMemberKicks, getMemberWarnings} from '../../util/requests';
+import {deleteMemberBan, deleteMemberKick, deleteMemberNote, deleteMemberWarning, getMemberInfo, getMemberNotes, getMemberWarnings, getMemberKicks, getMemberBans} from '../../util/requests';
 export default {
 	data () {
 		return {

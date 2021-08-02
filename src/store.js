@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { getDiscordInfo, getGuildChannels, getGuildRoles } from './util/requests';
+import { getDiscordInfo, getGuildChannels, getGuildRoles, getAllEmojis } from './util/requests';
 
 Vue.use(Vuex);
 

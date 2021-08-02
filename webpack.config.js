@@ -10,7 +10,7 @@ const runtimeConfig = dev ? require('./config') : require('./config.prod');
 module.exports = {
 	mode: dev ? 'development' : 'production',
 	devtool: dev ? 'source-map' : false,
-	entry: './index.js',
+	entry: './src/index.js',
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js',
