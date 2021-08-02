@@ -1,3 +1,5 @@
+/* global __RUNTIME_CONFIG__ */ // token replaced by Webpack
+
 /** Converts an endpoint path to a full URI based on the configured API base. */
 export const endpoint = path => `${__RUNTIME_CONFIG__.apiBaseURI}${path}`;
 
