@@ -4,8 +4,8 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint . --ext js,vue",
-    "lint:fix": "eslint . --ext js,vue --fix",
+    "lint": "eslint src --ext js,vue",
+    "lint:fix": "eslint src --ext js,vue --fix",
     "build": "webpack",
     "build:watch": "webpack --watch",
     "build:prod": "NODE_ENV=production webpack",
