@@ -118,7 +118,7 @@ export default {
 			});
 		},
 		linkAccounts () {
-			confirmVerify().then(response => {
+			confirmVerify(this.guildID).then(response => {
 				if (response.ok) {
 					// eslint-disable-next-line no-alert
 					alert('Accounts linked! You should now have access to the server. You can close this window now.');
