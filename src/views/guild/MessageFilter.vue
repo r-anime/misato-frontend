@@ -88,7 +88,7 @@ export default {
 		},
 	},
 	async created () {
-		const rule = await getFilterConfig().then(response => {
+		const rule = await getFilterConfig(this.guildID).then(response => {
 			if (response.ok) {
 				return response.json();
 			}
