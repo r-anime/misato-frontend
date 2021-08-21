@@ -95,11 +95,11 @@ export default {
 	},
 	created () {
 		Promise.all([
-			getMemberInfo().then(response => response.json()),
-			getMemberNotes().then(response => response.json()),
-			getMemberWarnings().then(response => response.json()),
-			getMemberKicks().then(response => response.json()),
-			getMemberBans().then(response => response.json()),
+			getMemberInfo(this.guildID, this.userID).then(response => response.json()),
+			getMemberNotes(this.guildID, this.userID).then(response => response.json()),
+			getMemberWarnings(this.guildID, this.userID).then(response => response.json()),
+			getMemberKicks(this.guildID, this.userID).then(response => response.json()),
+			getMemberBans(this.guildID, this.userID).then(response => response.json()),
 		]).then(([memberInfo, notes, warnings, kicks, bans]) => {
 			this.memberInfo = memberInfo;
 			this.notes = notes;
