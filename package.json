@@ -12,7 +12,7 @@
     "start": "webpack serve --open"
   },
   "dependencies": {
-    "buefy": "^0.8.20",
+    "buefy": "^0.9.8",
     "bulma": "^0.9.0",
     "emojis-list": "^3.0.0",
     "twemoji": "^13.1.0",
