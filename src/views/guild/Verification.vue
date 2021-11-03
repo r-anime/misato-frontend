@@ -3,10 +3,18 @@
 		<h1 class="title">
 			Verification Settings
 		</h1>
+
+		<b-field>
+			<b-checkbox v-model="verificationEnabled">
+				Enable Reddit verification
+			</b-checkbox>
+		</b-field>
+
 		<b-field label="Verification role">
 			<role-dropdown
 				v-model="verificationRoleID"
 				placeholder="Select a role"
+				:disabled="!verificationEnabled"
 				:loading="!loaded"
 				:roles="roles"
 			/>
@@ -20,6 +28,7 @@
 				<input
 					class="input"
 					readonly
+					:disabled="!verificationEnabled"
 					:value="verificationURL"
 				>
 			</div>
@@ -47,6 +56,7 @@ export default {
 	components: {RoleDropdown},
 	data () {
 		return {
+			verificationEnabled: false,
 			verificationRoleID: null,
 			loadedGuildSettings: false,
 			submitting: false,
@@ -77,6 +87,7 @@ export default {
 			}
 			return response.json();
 		});
+		this.verificationEnabled = !!guildSettings.roleID;
 		this.verificationRoleID = guildSettings.roleID;
 		this.loadedGuildSettings = true;
 	},
@@ -87,7 +98,7 @@ export default {
 		async submit () {
 			this.submitting = true;
 			const response = await setVerificationConfig(this.guildID, {
-				roleID: this.verificationRoleID,
+				roleID: this.verificationEnabled && this.verificationRoleID,
 			});
 			this.submitting = false;
 			if (!response.ok) {
