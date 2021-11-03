@@ -1,6 +1,7 @@
 <template>
 	<b-select
 		:value="value"
+		:disabled="disabled"
 		@input="$emit('input', $event)"
 	>
 		<slot name="options" />
@@ -26,6 +27,10 @@ export default {
 			type: Array,
 			required: true,
 		},
+		disabled: {
+			type: Boolean,
+			default: false,
+		}
 	},
 	computed: {
 		sortedRoles () {
