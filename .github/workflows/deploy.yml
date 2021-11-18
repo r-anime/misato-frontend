@@ -36,7 +36,7 @@ jobs:
 
           # update dependencies and rebuild
           npm ci
-          npm run build:prod -- -o /var/www/misato-frontend
+          npm run build:prod -- -o /var/www/discord.r-anime.moe
         EOF
 
     - name: Update deployment status (success)
