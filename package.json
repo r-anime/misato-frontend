@@ -12,13 +12,13 @@
     "start": "webpack serve --open"
   },
   "dependencies": {
-    "buefy": "^0.9.11",
+    "buefy": "^3.0.8",
     "bulma": "^0.9.0",
     "emojis-list": "^3.0.0",
     "twemoji": "^13.1.0",
-    "vue": "^2.6.11",
+    "vue": "^3.5.35",
     "vue-router": "^3.3.4",
-    "vuex": "^3.5.1"
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",
@@ -26,16 +26,16 @@
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.6.0",
-    "eslint": "^6.8.0",
+    "eslint": "^10.4.1",
     "eslint-plugin-vue": "^6.2.2",
     "html-webpack-plugin": "^5.3.1",
     "sass": "^1.26.8",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.2.1",
     "vue-loader": "^15.9.6",
-    "vue-template-compiler": "^2.6.11",
-    "webpack": "^5.28.0",
+    "vue-template-compiler": "^2.7.16",
+    "webpack": "^5.107.2",
     "webpack-cli": "^4.5.0",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^5.2.4"
   }
 }
